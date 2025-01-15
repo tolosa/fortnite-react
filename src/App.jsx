@@ -1,35 +1,74 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import axios from "axios";
+import {
+  Container,
+  Grid,
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  CircularProgress,
+} from "@mui/material";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchItems = async () => {
+      console.log("key", import.meta.env.VITE_FORTNITE_API_KEY);
+      try {
+        const response = await axios.get("https://fortniteapi.io/v2/shop", {
+          headers: {
+            Authorization: import.meta.env.VITE_FORTNITE_API_KEY,
+          },
+        });
+        setItems(response.data.shop);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching the Fortnite shop data:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchItems();
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <Container sx={{ marginTop: 4 }}>
+      <Typography variant="h4" gutterBottom align="center">
+        Fortnite Daily Shop
+      </Typography>
+      {loading ? (
+        <CircularProgress />
+      ) : (
+        <Grid container spacing={4}>
+          {items.map((item) => (
+            <Grid item key={item.mainId} xs={12} sm={6} md={4}>
+              <Card>
+                <CardMedia
+                  component="img"
+                  image={
+                    item.displayAssets[0].background ||
+                    item.displayAssets[0].url
+                  }
+                  alt={item.displayName}
+                />
+                <CardContent>
+                  <Typography variant="h6" component="div">
+                    {item.displayName}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {item.price.regularPrice} V-Bucks
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      )}
+    </Container>
+  );
+};
 
-export default App
+export default App;
