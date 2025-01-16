@@ -53,7 +53,7 @@ const ShopList = () => {
               </AccordionSummary>
               <AccordionDetails>
                 <Grid container spacing={3}>
-                  {sectionItems.map((item) => (
+                  {sectionItems.slice(0, 20).map((item) => (
                     <Grid item key={item.mainId} xs={12} sm={4} md={3}>
                       <Card>
                         <CardMedia
