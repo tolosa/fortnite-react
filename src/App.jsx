@@ -11,15 +11,8 @@ const theme = createTheme({
 const App = () => (
   <>
     <ThemeProvider theme={theme} defaultMode="dark" noSsr>
-      <Container
-        sx={{
-          marginTop: 4,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "flex-start",
-        }}
-      >
-        <Typography variant="h4" gutterBottom align="center">
+      <Container sx={{ height: "100vh" }} maxWidth="lg">
+        <Typography variant="h4" sx={{ my: 4, ml: "10px" }}>
           Fortnite Daily Shop
         </Typography>
         <ShopList />

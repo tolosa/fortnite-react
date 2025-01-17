@@ -47,9 +47,13 @@ const ShopList = () => {
       ) : (
         <>
           {Object.entries(groupedItems).map(([sectionName, sectionItems]) => (
-            <Accordion defaultExpanded key={sectionName}>
+            <Accordion
+              defaultExpanded
+              key={sectionName}
+              sx={{ backgroundColor: "grey.900" }}
+            >
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography>{sectionName}</Typography>
+                <Typography variant="h5">{sectionName}</Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Grid container spacing={3}>
@@ -65,7 +69,7 @@ const ShopList = () => {
                           alt={item.displayName}
                         />
                         <CardContent>
-                          <Typography variant="h6" component="div">
+                          <Typography variant="h6" noWrap>
                             {item.displayName}
                           </Typography>
                           <Typography variant="body2" color="text.secondary">
