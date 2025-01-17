@@ -10,6 +10,7 @@ import {
   CardContent,
   Typography,
   CircularProgress,
+  Icon,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { groupBy } from "lodash";
@@ -53,13 +54,25 @@ const ShopList = () => {
               sx={{ backgroundColor: "grey.900" }}
             >
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography variant="h5">{sectionName}</Typography>
+                <Typography variant="h5" color="text.secondary">
+                  {sectionName}
+                </Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Grid container spacing={3}>
                   {sectionItems.slice(0, 20).map((item) => (
                     <Grid item key={item.mainId} xs={12} sm={4} md={3}>
-                      <Card sx={{ position: "relative" }}>
+                      <Card
+                        sx={{
+                          position: "relative",
+                          "&:hover .MuiTypography-body2": {
+                            visibility: "visible",
+                          },
+                          "& .MuiCardContent-root": {
+                            pb: "1.1rem",
+                          },
+                        }}
+                      >
                         <CardMedia
                           component="img"
                           image={
@@ -74,20 +87,37 @@ const ShopList = () => {
                             bottom: 0,
                             left: 0,
                             right: 0,
-                            pt: 5,
+                            pt: 2,
                             background:
-                              "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 100%)",
+                              "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 100%)",
                           }}
                         >
+                          <Typography
+                            variant="body2"
+                            color="text.secondary"
+                            sx={{ visibility: "hidden" }}
+                          >
+                            {item.displayType}
+                          </Typography>
                           <Typography variant="h6" noWrap>
                             {item.displayName}
                           </Typography>
                           <Typography
-                            variant="body2"
-                            color="text.secondary"
-                            sx={{ pb: 0 }}
+                            sx={{ display: "flex", alignItems: "center" }}
                           >
-                            {item.price.finalPrice} V-Bucks
+                            <Icon
+                              sx={{
+                                fontSize: "1.3rem",
+                                mr: "3px",
+                              }}
+                            >
+                              paid
+                            </Icon>
+                            <strong>{item.price.finalPrice}</strong>
+                            &nbsp;
+                            <Typography color="text.secondary" component="span">
+                              V-Bucks
+                            </Typography>
                           </Typography>
                         </CardContent>
                       </Card>
