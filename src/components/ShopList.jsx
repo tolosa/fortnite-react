@@ -59,7 +59,7 @@ const ShopList = () => {
                 <Grid container spacing={3}>
                   {sectionItems.slice(0, 20).map((item) => (
                     <Grid item key={item.mainId} xs={12} sm={4} md={3}>
-                      <Card>
+                      <Card sx={{ position: "relative" }}>
                         <CardMedia
                           component="img"
                           image={
@@ -68,12 +68,26 @@ const ShopList = () => {
                           }
                           alt={item.displayName}
                         />
-                        <CardContent>
+                        <CardContent
+                          sx={{
+                            position: "absolute",
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            pt: 5,
+                            background:
+                              "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 100%)",
+                          }}
+                        >
                           <Typography variant="h6" noWrap>
                             {item.displayName}
                           </Typography>
-                          <Typography variant="body2" color="text.secondary">
-                            {item.price.regularPrice} V-Bucks
+                          <Typography
+                            variant="body2"
+                            color="text.secondary"
+                            sx={{ pb: 0 }}
+                          >
+                            {item.price.finalPrice} V-Bucks
                           </Typography>
                         </CardContent>
                       </Card>
