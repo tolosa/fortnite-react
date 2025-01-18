@@ -18,6 +18,12 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { groupBy } from "lodash";
 
+const sanitizeTypes = (items) => {
+  items.forEach((i) => {
+    i.displayType = i.displayType.replace(/\d+/g, "").trim();
+  });
+};
+
 const ShopList = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -32,6 +38,7 @@ const ShopList = () => {
           },
         });
         console.log("Fortnite shop data:", response.data);
+        sanitizeTypes(response.data.shop);
         setItems(response.data.shop);
         setLoading(false);
       } catch (error) {

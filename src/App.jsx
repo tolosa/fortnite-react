@@ -9,16 +9,14 @@ const theme = createTheme({
 });
 
 const App = () => (
-  <>
-    <ThemeProvider theme={theme} defaultMode="dark" noSsr>
-      <Container sx={{ height: "100vh" }} maxWidth="lg">
-        <Typography variant="h4" sx={{ my: 4, ml: "10px" }}>
-          Fortnite Daily Shop
-        </Typography>
-        <ShopList />
-      </Container>
-    </ThemeProvider>
-  </>
+  <ThemeProvider theme={theme} noSsr>
+    <Container sx={{ height: "100vh" }} maxWidth="lg">
+      <Typography variant="h4" sx={{ my: 4, ml: "10px" }}>
+        Fortnite Daily Shop
+      </Typography>
+      <ShopList />
+    </Container>
+  </ThemeProvider>
 );
 
 export default App;
