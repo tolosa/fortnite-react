@@ -10,7 +10,7 @@ const theme = createTheme({
 
 const App = () => (
   <ThemeProvider theme={theme} noSsr>
-    <Container sx={{ height: "100vh" }} maxWidth="lg">
+    <Container sx={{ maxWidth: "lg", mx: "auto" }}>
       <Typography variant="h4" sx={{ my: 4, ml: "10px" }}>
         Fortnite Daily Shop
       </Typography>
