@@ -11,6 +11,9 @@ import {
   Typography,
   CircularProgress,
   Icon,
+  Select,
+  MenuItem,
+  Divider,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { groupBy } from "lodash";
@@ -18,6 +21,7 @@ import { groupBy } from "lodash";
 const ShopList = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedType, setSelectedType] = useState("");
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -39,14 +43,34 @@ const ShopList = () => {
     fetchItems();
   }, []);
 
-  const groupedItems = groupBy(items, (i) => i.section.name); // name, id, category
-
+  const itemTypes = new Set(items.map((i) => i.displayType));
+  const filteredItems = selectedType
+    ? items.filter((i) => i.displayType === selectedType)
+    : items;
+  const groupedItems = groupBy(filteredItems, (i) => i.section.name); // name, id, category
   return (
     <>
       {loading ? (
         <CircularProgress />
       ) : (
         <>
+          <Select
+            value={selectedType}
+            onChange={(e) => setSelectedType(e.target.value)}
+            sx={{ minWidth: 120 }}
+            size="small"
+            displayEmpty
+          >
+            <MenuItem key="all" value={""}>
+              <em>All</em>
+            </MenuItem>
+            <Divider />
+            {Array.from(itemTypes).map((type) => (
+              <MenuItem key={type} value={type}>
+                {type}
+              </MenuItem>
+            ))}
+          </Select>
           {Object.entries(groupedItems).map(([sectionName, sectionItems]) => (
             <Accordion
               defaultExpanded
