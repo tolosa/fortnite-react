@@ -11,13 +11,11 @@ import {
   Typography,
   CircularProgress,
   Icon,
-  Select,
   MenuItem,
   Divider,
   AppBar,
   Container,
-  InputLabel,
-  FormControl,
+  TextField,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { groupBy } from "lodash";
@@ -74,29 +72,26 @@ const ShopList = () => {
           <Typography variant="h4" sx={{ flexGrow: 1 }}>
             Fortnite Daily Shop
           </Typography>
-          <FormControl size="small">
-            <InputLabel id="filter-label">Filter</InputLabel>
-            <Select
-              value={selectedType}
-              onChange={(e) => setSelectedType(e.target.value)}
-              labelId="filter-label"
-              label="Filter"
-              sx={{ minWidth: 120 }}
-              size="small"
-              disabled={!itemTypes.size}
-              displayEmpty
-            >
-              <MenuItem key="all" value={""} selected>
-                <em>All</em>
+          <TextField
+            select
+            label="Filter"
+            size="small"
+            value={selectedType}
+            onChange={(e) => setSelectedType(e.target.value)}
+            sx={{ minWidth: 120 }}
+            disabled={!itemTypes.size}
+            defaultValue={""}
+          >
+            <MenuItem key="all" value={""}>
+              <em>All</em>
+            </MenuItem>
+            <Divider />
+            {Array.from(itemTypes).map((type) => (
+              <MenuItem key={type} value={type}>
+                {type}
               </MenuItem>
-              <Divider />
-              {Array.from(itemTypes).map((type) => (
-                <MenuItem key={type} value={type}>
-                  {type}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+            ))}
+          </TextField>
         </Container>
       </AppBar>
       <Container sx={{ maxWidth: "lg", mx: "auto" }}>
