@@ -69,8 +69,14 @@ const ShopList = () => {
             py: 1.5,
           }}
         >
-          <Typography variant="h4" sx={{ flexGrow: 1 }}>
-            Fortnite Daily Shop
+          <img
+            fetchPriority="high"
+            alt="Fortnite Logo"
+            src="fortniteLogo.svg"
+            width="100"
+          />
+          <Typography variant="h5" sx={{ flexGrow: 1, ml: "1ex" }}>
+            Daily Item Shop
           </Typography>
           <TextField
             select
@@ -83,7 +89,7 @@ const ShopList = () => {
             defaultValue={""}
           >
             <MenuItem key="all" value={""}>
-              <em>All</em>
+              All
             </MenuItem>
             <Divider />
             {Array.from(itemTypes).map((type) => (
