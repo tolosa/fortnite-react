@@ -16,6 +16,8 @@ import {
   Divider,
   AppBar,
   Container,
+  InputLabel,
+  FormControl,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { groupBy } from "lodash";
@@ -72,24 +74,29 @@ const ShopList = () => {
           <Typography variant="h4" sx={{ flexGrow: 1 }}>
             Fortnite Daily Shop
           </Typography>
-          <Select
-            value={selectedType}
-            onChange={(e) => setSelectedType(e.target.value)}
-            sx={{ minWidth: 120 }}
-            size="small"
-            disabled={!itemTypes.size}
-            displayEmpty
-          >
-            <MenuItem key="all" value={""}>
-              <em>All</em>
-            </MenuItem>
-            <Divider />
-            {Array.from(itemTypes).map((type) => (
-              <MenuItem key={type} value={type}>
-                {type}
+          <FormControl size="small">
+            <InputLabel id="filter-label">Filter</InputLabel>
+            <Select
+              value={selectedType}
+              onChange={(e) => setSelectedType(e.target.value)}
+              labelId="filter-label"
+              label="Filter"
+              sx={{ minWidth: 120 }}
+              size="small"
+              disabled={!itemTypes.size}
+              displayEmpty
+            >
+              <MenuItem key="all" value={""} selected>
+                <em>All</em>
               </MenuItem>
-            ))}
-          </Select>
+              <Divider />
+              {Array.from(itemTypes).map((type) => (
+                <MenuItem key={type} value={type}>
+                  {type}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </Container>
       </AppBar>
       <Container sx={{ maxWidth: "lg", mx: "auto" }}>
