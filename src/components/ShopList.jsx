@@ -17,7 +17,6 @@ import {
   Container,
   TextField,
 } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { groupBy } from "lodash";
 
 const sanitizeTypes = (items) => {
@@ -59,7 +58,7 @@ const ShopList = () => {
   const groupedItems = groupBy(filteredItems, (i) => i.section.name); // name, id, category
   return (
     <>
-      <AppBar position="sticky" sx={{ mb: 2 }}>
+      <AppBar position="sticky">
         <Container
           sx={{
             maxWidth: "lg",
@@ -84,11 +83,10 @@ const ShopList = () => {
             size="small"
             value={selectedType}
             onChange={(e) => setSelectedType(e.target.value)}
-            sx={{ minWidth: 120 }}
+            sx={{ minWidth: 90 }}
             disabled={!itemTypes.size}
-            defaultValue={""}
           >
-            <MenuItem key="all" value={""}>
+            <MenuItem key="all" value="">
               All
             </MenuItem>
             <Divider />
@@ -100,7 +98,7 @@ const ShopList = () => {
           </TextField>
         </Container>
       </AppBar>
-      <Container sx={{ maxWidth: "lg", mx: "auto" }}>
+      <Container sx={{ maxWidth: "lg", mx: "auto", my: 3 }}>
         {loading ? (
           <CircularProgress />
         ) : (
@@ -111,7 +109,7 @@ const ShopList = () => {
                 key={sectionName}
                 sx={{ backgroundColor: "grey.900" }}
               >
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <AccordionSummary expandIcon={<Icon>expand_more</Icon>}>
                   <Typography variant="h5" color="text.secondary">
                     {sectionName}
                   </Typography>
@@ -163,12 +161,7 @@ const ShopList = () => {
                             <Typography
                               sx={{ display: "flex", alignItems: "center" }}
                             >
-                              <Icon
-                                sx={{
-                                  fontSize: "1.3rem",
-                                  mr: "3px",
-                                }}
-                              >
+                              <Icon sx={{ fontSize: "1.3rem", mr: "3px" }}>
                                 paid
                               </Icon>
                               <strong>{item.price.finalPrice}</strong>
