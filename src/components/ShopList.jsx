@@ -14,6 +14,8 @@ import {
   Select,
   MenuItem,
   Divider,
+  AppBar,
+  Container,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { groupBy } from "lodash";
@@ -57,15 +59,25 @@ const ShopList = () => {
   const groupedItems = groupBy(filteredItems, (i) => i.section.name); // name, id, category
   return (
     <>
-      {loading ? (
-        <CircularProgress />
-      ) : (
-        <>
+      <AppBar position="sticky" sx={{ mb: 2 }}>
+        <Container
+          sx={{
+            maxWidth: "lg",
+            mx: "auto",
+            display: "flex",
+            alignItems: "center",
+            py: 1.5,
+          }}
+        >
+          <Typography variant="h4" sx={{ flexGrow: 1 }}>
+            Fortnite Daily Shop
+          </Typography>
           <Select
             value={selectedType}
             onChange={(e) => setSelectedType(e.target.value)}
             sx={{ minWidth: 120 }}
             size="small"
+            disabled={!itemTypes.size}
             displayEmpty
           >
             <MenuItem key="all" value={""}>
@@ -78,88 +90,99 @@ const ShopList = () => {
               </MenuItem>
             ))}
           </Select>
-          {Object.entries(groupedItems).map(([sectionName, sectionItems]) => (
-            <Accordion
-              defaultExpanded
-              key={sectionName}
-              sx={{ backgroundColor: "grey.900" }}
-            >
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography variant="h5" color="text.secondary">
-                  {sectionName}
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Grid container spacing={3}>
-                  {sectionItems.slice(0, 20).map((item) => (
-                    <Grid item key={item.mainId} xs={12} sm={4} md={3}>
-                      <Card
-                        sx={{
-                          position: "relative",
-                          "&:hover .MuiTypography-body2": {
-                            visibility: "visible",
-                          },
-                          "& .MuiCardContent-root": {
-                            pb: "1.1rem",
-                          },
-                        }}
-                      >
-                        <CardMedia
-                          component="img"
-                          image={
-                            item.displayAssets[0].background ||
-                            item.displayAssets[0].url
-                          }
-                          alt={item.displayName}
-                        />
-                        <CardContent
+        </Container>
+      </AppBar>
+      <Container sx={{ maxWidth: "lg", mx: "auto" }}>
+        {loading ? (
+          <CircularProgress />
+        ) : (
+          <>
+            {Object.entries(groupedItems).map(([sectionName, sectionItems]) => (
+              <Accordion
+                defaultExpanded
+                key={sectionName}
+                sx={{ backgroundColor: "grey.900" }}
+              >
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography variant="h5" color="text.secondary">
+                    {sectionName}
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Grid container spacing={3}>
+                    {sectionItems.slice(0, 20).map((item) => (
+                      <Grid item key={item.mainId} xs={12} sm={4} md={3}>
+                        <Card
                           sx={{
-                            position: "absolute",
-                            bottom: 0,
-                            left: 0,
-                            right: 0,
-                            pt: 2,
-                            background:
-                              "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 100%)",
+                            position: "relative",
+                            "&:hover .MuiTypography-body2": {
+                              visibility: "visible",
+                            },
+                            "& .MuiCardContent-root": {
+                              pb: "1.1rem",
+                            },
                           }}
                         >
-                          <Typography
-                            variant="body2"
-                            color="text.secondary"
-                            sx={{ visibility: "hidden" }}
+                          <CardMedia
+                            component="img"
+                            image={
+                              item.displayAssets[0].background ||
+                              item.displayAssets[0].url
+                            }
+                            alt={item.displayName}
+                          />
+                          <CardContent
+                            sx={{
+                              position: "absolute",
+                              bottom: 0,
+                              left: 0,
+                              right: 0,
+                              pt: 2,
+                              background:
+                                "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 100%)",
+                            }}
                           >
-                            {item.displayType}
-                          </Typography>
-                          <Typography variant="h6" noWrap>
-                            {item.displayName}
-                          </Typography>
-                          <Typography
-                            sx={{ display: "flex", alignItems: "center" }}
-                          >
-                            <Icon
-                              sx={{
-                                fontSize: "1.3rem",
-                                mr: "3px",
-                              }}
+                            <Typography
+                              variant="body2"
+                              color="text.secondary"
+                              sx={{ visibility: "hidden" }}
                             >
-                              paid
-                            </Icon>
-                            <strong>{item.price.finalPrice}</strong>
-                            &nbsp;
-                            <Typography color="text.secondary" component="span">
-                              V-Bucks
+                              {item.displayType}
                             </Typography>
-                          </Typography>
-                        </CardContent>
-                      </Card>
-                    </Grid>
-                  ))}
-                </Grid>
-              </AccordionDetails>
-            </Accordion>
-          ))}
-        </>
-      )}
+                            <Typography variant="h6" noWrap>
+                              {item.displayName}
+                            </Typography>
+                            <Typography
+                              sx={{ display: "flex", alignItems: "center" }}
+                            >
+                              <Icon
+                                sx={{
+                                  fontSize: "1.3rem",
+                                  mr: "3px",
+                                }}
+                              >
+                                paid
+                              </Icon>
+                              <strong>{item.price.finalPrice}</strong>
+                              &nbsp;
+                              <Typography
+                                color="text.secondary"
+                                component="span"
+                              >
+                                V-Bucks
+                              </Typography>
+                            </Typography>
+                          </CardContent>
+                        </Card>
+                      </Grid>
+                    ))}
+                  </Grid>
+                </AccordionDetails>
+              </Accordion>
+            ))}
+          </>
+        )}
+      </Container>
     </>
   );
 };
